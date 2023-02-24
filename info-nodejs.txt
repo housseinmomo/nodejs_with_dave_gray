@@ -1,0 +1,7 @@
+NodeJS n'est pas un framework ou librarie
+Il s'agit d'un environnement d'execution JS 
+Contrairement au Vanilla JS (pure) qui s'execute sur le browser (frontend), NodeJS s'execute sur un seveur. 
+Il a ete construit sur : Chrome V8 Javascript engine 
+Par consequent, NodeJS peut etre considerer comme une solution (backend) 
+Ici nous aurons "glabal object" au lieu "window object" comme objet parent ou global  
+Dans NodeJS l'API fetch n'est pas present 
