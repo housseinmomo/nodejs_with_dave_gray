@@ -5,4 +5,23 @@ Il a ete construit sur : Chrome V8 Javascript engine
 Par consequent, NodeJS peut etre considerer comme une solution (backend) 
 Ici nous aurons "glabal object" au lieu "window object" comme objet parent ou global  
 Dans NodeJS l'API fetch n'est pas present 
-Avec NodeJS, la console se trouve au niveau du terminal 
+Avec NodeJS, la console se trouve au niveau du terminal
+
+Contrairement aux packages de base de NodeJS, les packages npm sont des packages (node modules) creer par des personnes tier (developpeurs)
+Lors d'un push ou d'un pull depuis un depot github, nous devons omettre le dossier node_module (qui contient l'ensemble de npm package) 
+puis nous pouvons l'installer nous meme via le fichier package.json
+Pour ce faire nous devons creer un fichier .gitignore pour ignorer le dossier node_module
+Lors de l'instalation d'un package, on peux soit le configurer comme une dependance de production (on met rien apres le package) ou developpement (-D --save-dev)
+
+Quelques packages utiles : 
+    - nodemon : permet de redemarrer un serveur apres chaque modification d'un fichier : npm install nodemon -g 
+    - initialiser npm pour un projet : npm init <-y: pour eviter les questions>
+    - npm install date-fns 
+    - npm install : cette commande nous permet de telecharger l'ensemble des dependances se trouvant sur le fichier package.json  
+    - npm update : va faire des mises a jour en se basant toujours sur le fichier package.json 
+    - npm <rm, un, uninstall> package <-D: si c'est une depandance de developpement>
+    - npm install uuid@version : ce package nous permet de generer des id aleatoire 
+
+Au niveau de l'objet script dans package.json, on peux specifier des commandes qu'on va libeller avec des mots clef (raccourcie)
+    - npm start 
+    - npm run dev 
