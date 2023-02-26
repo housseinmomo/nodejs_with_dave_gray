@@ -107,18 +107,6 @@ const server = http.createServer((req, res) => {
                 console.log("404 case");
         }   
     }
-
-
-    // Cette methode n'est pas conseiller
-    // if(req.url === '/' || req.url === 'index.html') {
-    //     res.statusCode = 200
-    //     res.setHeader('Content-Type', 'text/html')
-    //     path = path.join(__dirname, "views", "index.html")
-    //     fs.readFile(path, "utf-8", (err, data) => {
-    //         if(err) throw err 
-    //         res.end(data)
-    //     })
-    // }
 })
 server.listen(PORT, () => console.log(`Server running on PORT ${PORT}`))
 
