@@ -34,3 +34,6 @@ Il existe 3 types de Middlewares :
     - Custom Middleware
     - Middleware creer par des parties tiers 
     
+Modele MVC dans ExpressJS:
+- ici le controller va nous permettre de stocker les fonction de traitement. 
+- et c'est les routes qui vont faire appelle a ces fonctions, on specifiant le path associer a cette fonction ainsi que la methode HTTP 
