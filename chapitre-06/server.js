@@ -51,7 +51,7 @@ const three = (req, res) => {
 
 app.get('/chain', [one, two, three])
 
-app.get("/*", (req, res) => {
+app.get("/*", (req, res) => { 
     res.status(404).sendFile(path.join(__dirname, "views", "404.html"))
 })
 

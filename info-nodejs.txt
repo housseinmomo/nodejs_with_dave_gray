@@ -25,3 +25,12 @@ Quelques packages utiles :
 Au niveau de l'objet script dans package.json, on peux specifier des commandes qu'on va libeller avec des mots clef (raccourcie)
     - npm start 
     - npm run dev 
+
+ExpressJS est un framework baser sur NodeJS
+
+Middleware: c'est n'importe quoi qui se trouve entre la requete et la reponse 
+Il existe 3 types de Middlewares :
+    - Middlewares et pre-concue 
+    - Custom Middleware
+    - Middleware creer par des parties tiers 
+    
