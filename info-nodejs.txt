@@ -37,3 +37,33 @@ Il existe 3 types de Middlewares :
 Modele MVC dans ExpressJS:
 - ici le controller va nous permettre de stocker les fonction de traitement. 
 - et c'est les routes qui vont faire appelle a ces fonctions, on specifiant le path associer a cette fonction ainsi que la methode HTTP 
+
+JWT (JSON Web Tokens) va nous permettre de securiser nos routes 
+C'est une forme d'Authentification apres que le user se soit connecter 
+Une fois que le user se connecte, il pourra :
+    - acceder a un token : expire apres peu de temps (entre 5 a 15 minutes)
+    - raffraichier le token : prends du temps pour expirer (des heures, des jours) 
+
+Accees au token :
+    - on envoie sous le format JSON 
+    - le client le stocke en memoire 
+    - on ne le stocke pas dans un stockage local ou dans des cookies 
+
+    - publier apres authorisation 
+    - le client va utiliser ce token pour utiliser pour acceder a l'API tant qu'il est toujours valide (non expirer)
+    - API va verifier le token d'accees avec les Middlewares
+    - un nouveau token sera publier apres chaque rafraichissement de la requete 
+
+Rafrichissement du token: 
+    - on envoie sous le format httpOnly cookie 
+    - Ce n'est pas accessible depuis le Javascript
+    - doit imperativement expirer a un moment (avoir un delais)
+
+    - publier apres l'autorisation
+    - le client l'utilise pour faire des requetes sur des nouveau access (endpoint)
+    - on peux le verifier avec les endpoint & database 
+    - doit imperativement expirer a un moment / deconnexion 
+
+Une fois que nous aurons configurer notre token et creer un middleware (qui a pour objectif de verifier si le user est connecter/authentifier) qui va s'executer a chaque requete 
+On va utiliser le middleware sur les routes que l'on souhaite proteger 
+

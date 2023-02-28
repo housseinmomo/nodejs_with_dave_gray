@@ -1,0 +1,7 @@
+ID: 6c4d7907-93b0-40ed-bef5-63c0e7967f5c	 DateTime: 2023-02-27	10:38:22	 Message: Error: Not allowed by CORS
+ID: 2cefcd6e-7429-417a-92b2-25baf8e90457	 DateTime: 2023-02-27	10:38:23	 Message: Error: Not allowed by CORS
+ID: 40b2e1f5-8563-4c8a-a9c2-9d57f4097716	 DateTime: 2023-02-27	10:38:24	 Message: Error: Not allowed by CORS
+ID: eadf7f68-b063-4512-9d6a-51b8e3962485	 DateTime: 2023-02-27	10:39:04	 Message: Error: Not allowed by CORS
+ID: 3f66af1f-3e46-47fc-bebd-c80e523a92c2	 DateTime: 2023-02-27	16:59:31	 Message: TypeError: data.employees.find is not a function
+ID: c4a122b4-fad0-4d4e-8499-8481718edd8d	 DateTime: 2023-02-28	13:35:26	 Message: SyntaxError: Unexpected token } in JSON at position 32
+ID: 9c8de1f1-662d-4927-b2bb-59ec8dec2742	 DateTime: 2023-02-28	14:11:13	 Message: SyntaxError: Unexpected end of JSON input
