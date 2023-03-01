@@ -1,12 +1,7 @@
-const userDB = {
-    users: require('../model/users.json'),
-    setUsers: function (data) { this.users = data }
-}
-
+const User = require('../model/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const fsPromise = require('fs').promises
-const path = require('path')
+
 
 
 const handleLogin = async (req, res) => {
@@ -17,8 +12,7 @@ const handleLogin = async (req, res) => {
     if(!user || !pwd) { return res.status(400).json({"message": "Username and password are required."}) }
     // find user with username 
 
-    const foundUser = userDB.users.find(person => person.username === user)
-    console.log(foundUser);
+    const foundUser = await User.findOne({username: user}).exec()
 
     // user does not exist 
     if(!foundUser) return res.sendStatus(401) // Unauthorized
@@ -45,24 +39,13 @@ const handleLogin = async (req, res) => {
             { expiresIn: '1d' } // en production, on met en moyenne 5 min
         )
 
-        // Saving refreshToken with current user 
-        const otherUsers  = userDB.users.filter(person => person.username !== foundUser.username)
-        const currentUser = [{...foundUser, refreshToken}]
-        userDB.setUsers([...otherUsers, currentUser])
-        
-        try {
-            // persist dans le fichier users.json les nouvelles donnees (incluant l'utilisateur connecte)
-            await fsPromise.writeFile(
-                path.join(__dirname, "..", "model", "users.json"),
-                JSON.stringify(userDB.users)
-            )
-        } catch(err) {
-            console.error(err.message)
-        }
+        // Saving refreshToken with current user in database
+        foundUser.refreshToken = refreshToken
+        const result = await foundUser.save()
+        console.log(result)
 
         // Une fois que l'authentification est terminer donne token d'accees 
-        
-        res.cookie('jwt', refreshToken, {httpOnly: true,sameSite: "None", secure: true, maxAge: 24 * 60 * 60 * 1000})        
+        res.cookie('jwt', refreshToken, {httpOnly: true,sameSite: "None", maxAge: 24 * 60 * 60 * 1000})    // secure: true     
         res.json({ accessToken })
     } else { 
         res.sendStatus(401) // Unauthorized

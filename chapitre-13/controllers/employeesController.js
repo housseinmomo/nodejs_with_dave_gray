@@ -1,72 +1,71 @@
-const data = {
-    employees: require("../model/employees.json"),
-    setEmployees: function (data) {this.employees = data}
+const Employee = require('../model/Employee')
+
+const getAllEmployees = async (req, res) => {
+    const employees = await Employee.find()
+    if (!employees) return res.status(204).json({"message": "No employees found."}) // 204: No content 
+    res.json(employees)
 }
 
-const getAllEmployees = (req, res) => {
-    res.json(data.employees)
-}
+const getEmployee = async (req, res) => {
+    
+    if(!req?.params?.id) return res.status(400).json({"message": "Employee ID required"})
 
-const getEmployee = (req, res) => {
-    const employee = data.employees.find(emp => emp.id === parseInt(req.params.id))
-    if(!employee){
-        return res.status(400).json({"message": `Emplyee ID ${req.params.id} not found.`})
-    }
+    const employee = await Employee.findOne({_id: req.params.id}).exec()
+    
+    if(!employee) return res.status(400).json({"message": `Emplyee ID ${req.params.id} not found.`})
+    
     res.json(employee) 
 }
 
-const createNewEmployee = (req, res) => {
+const createNewEmployee = async (req, res) => {
     // create new employee object 
-    const newEmployee = {
-        // On recupere le id du dernier employee ajouter si il en existe un
-        // Sinon ca voudra dire que la liste est vide et on demarre a 1 
-        id: data.employees[data.employees.length -1].id + 1 || 1,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname
+    if(!req?.body?.firstname || !req?.body?.lastname) {
+        return res.status(400).json({"message": "First and last names are required"})
+    }    
+
+    try {
+        const result = await Employee.create({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname
+        })
+        res.status(201).json(result)
+    } catch(err) {
+        console.error(err)
     }
-
-
-    // Si l'utilisateur ne remplie les champs firstname ou lastname alors on retourne un message d'erreur
-    if(!newEmployee.firstname || !newEmployee.lastname) {
-        return res.status(400).json({'message': 'First and last names are required.'})
-    }
-
-    // on ajoute le nouvelle employer dans notre liste 
-    // 201 : ajout d'un nouvelle element 
-    data.setEmployees([...data.employees, newEmployee])
-    res.json(data.employees)
 }
 
-const updateEmployee = (req, res) => {
-    // on verifie d'abord si nous avons un employee avec le meme id passer par l'utilisateur
-    const employee = data.employees.find(emp => emp.id === parseInt(req.body.id))
+const updateEmployee = async (req, res) => {
+    
+    if(!req?.body?.id) {
+        return res.status(400).json({"message": "ID parameter is required."})
+    }
+
+    const employee = await Employee.findOne({_id: req.body.id}).exec()
+    
     if(!employee){
-        return res.status(400).json({"message": `Emplyee ID ${req.body.id} not found.`})
+        return res.status(204).json({"message": `No employee matches ID ID ${req.body.id}.`})
     }
 
     if(req.body.firstname) employee.firstname = req.body.firstname
     if(req.body.lastname) employee.lastname = req.body.lastname
 
-    // On recupere une liste de tous les employees sauf celui qui a ete modifier, on l'a supprimer de la liste  
-    const filteredArray = data.employees.filter((emp) => emp.id !== parseInt(req.body.id))
-    // On rajoute la nouvelle version de l'employee, apres modification 
-    const unsortedArray = [...filteredArray, employee]
-    // On va ensuite trier la liste des employees selon les id
-    const sortedArray = unsortedArray.sort((a,b) => a.id > b.id ? 1 : a.id < b.id ? -1 : 0)
-    data.setEmployees(sortedArray)
-    res.json(data.employees)
+    const result = await employee.save()
+    res.json(result)
     
 }
 
-const deleteEmployee = (req, res) => {
-    const employee = data.employees.find(emp => emp.id === parseInt(req.body.id))
+const deleteEmployee = async (req, res) => {
+    
+    if(!req?.body?.id) return res.status(400).json({"message": "Employee ID required."})
+    
+    const employee = await Employee.findOne({_id: req.body.id}).exec()
+    
     if(!employee){
-        return res.status(400).json({"message": `Emplyee ID ${req.body.id} not found.`})
+        return res.status(204).json({"message": `No employee matches ID ID ${req.body.id}.`})
     }
-    // On recupere une liste de tous les employees sauf celui qui a ete modifier, on l'a supprimer de la liste  
-    const filteredArray = data.employees.filter((emp) => emp.id !== parseInt(req.body.id))
-    data.setEmployees([...filteredArray])
-    res.json(data.employees)
+
+    const result = await employee.deleteOne({_id: req.body.id})
+    res.json(result)
 }
 
 

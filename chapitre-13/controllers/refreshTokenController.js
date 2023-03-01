@@ -1,12 +1,8 @@
-const userDB = {
-    users: require('../model/users.json'),
-    setUsers: function (data) { this.users = data }
-}
-
+const User = require('../model/User')
 const jwt = require('jsonwebtoken')
 
 // cette methode va nous permettre de regenerer un nouveau token d'access 
-const handleRefreshToken =  (req, res) => {
+const handleRefreshToken =  async (req, res) => {
     
     const cookies = req.cookies 
     if(!cookies?.jwt) return res.sendStatus(403) 
@@ -14,7 +10,7 @@ const handleRefreshToken =  (req, res) => {
     const refreshToken = cookies.jwt
     
 
-    const foundUser = userDB.users.find(person => person.refreshToken === refreshToken )
+    const foundUser = await User.findOne({ refreshToken: refreshToken }).exec()
     console.log(foundUser)
     // user does not exist 
     if(!foundUser) return res.sendStatus(403) // Forbidden

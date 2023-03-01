@@ -25,8 +25,6 @@ const handleNewUser = async (req, res) => {
     console.log("user est bien creer")
     console.log(result)
 
-    
-
     res.status(201).json({"success": `New user ${user} created !`})
 }
 
