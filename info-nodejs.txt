@@ -50,7 +50,7 @@ Accees au token :
     - on ne le stocke pas dans un stockage local ou dans des cookies 
 
     - publier apres authorisation 
-    - le client va utiliser ce token pour utiliser pour acceder a l'API tant qu'il est toujours valide (non expirer)
+    - le client va utiliser ce token pour acceder a l'API tant qu'il est toujours valide (non expirer)
     - API va verifier le token d'accees avec les Middlewares
     - un nouveau token sera publier apres chaque rafraichissement de la requete 
 
@@ -67,3 +67,4 @@ Rafrichissement du token:
 Une fois que nous aurons configurer notre token et creer un middleware (qui a pour objectif de verifier si le user est connecter/authentifier) qui va s'executer a chaque requete 
 On va utiliser le middleware sur les routes que l'on souhaite proteger 
 
+ 
